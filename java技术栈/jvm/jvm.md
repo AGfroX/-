@@ -1,3 +1,7 @@
+
+
+# JVM总结
+
 # 概念
 
 1、JVM内存模型：
@@ -17,8 +21,7 @@ JVM内存管理最大的一块,对被线程共享,目的是存放对象的实例
 没有可用空间时,会抛出OOM异常.根据对象的存活周期不同,JVM把对象进行分代管理,由垃圾回收器进行
 垃圾的回收管理
 6、方法区：
-又称非堆区,用于存储已被虚拟机加载的类信息,常量,静态变量,即时编译器优化后的代码等数据.1.7的永
-久代和1.8的元空间都是方法区的一种实现
+又称非堆区,用于存储已被虚拟机加载的类信息,常量,静态变量,即时编译器优化后的代码等数据.1.7的永久代和1.8的元空间都是方法区的一种实现
 
 
 
@@ -42,4 +45,26 @@ JVM内存管理最大的一块,对被线程共享,目的是存放对象的实例
 
 
 
-OOM
+# OOM
+
+ java.lang.OutOfMemoryError
+
+主要类型
+
+```text
+java.lang.StackOverflowError
+java.lang.OutOfMemoryError: Java heap space
+java.lang.OutOfMemoryError: GC overhead limit exceeded
+java.lang.OutOfMemoryError-->Metaspace
+java.lang.OutOfMemoryError: Direct buffer memory
+java.lang.OutOfMemoryError: unable to create new native thread
+java.lang.OutOfMemoryError：Metaspace
+java.lang.OutOfMemoryError: Requested array size exceeds VM limit
+java.lang.OutOfMemoryError: Out of swap space
+java.lang.OutOfMemoryError：Kill process or sacrifice child
+```
+
+x
+
+
+
