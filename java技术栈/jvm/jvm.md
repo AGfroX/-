@@ -2,6 +2,51 @@
 
 # JVM总结
 
+
+
+# 内存模型	
+
+**JVM内存模型：** 
+**虚拟机栈**：用来放局部变量、堆区对象的引用和常量池对象的引用；但对象本身不存放在栈中，而是存放在堆（new出来的对象）或者常量池中(对象可能在常量池里)（字符串常量对象存放在常量池中。）；
+
+**方法区**：存放类的信息；此区包含常量池（常量池用来放基本类型常量和字符串类型常量），此部分可以回收；方法区可以放用static修饰的变量，但此部分不能回收，因为方法区也叫持久带，永久带基本不参与垃圾回收；
+
+**堆：**：存放一些new出的对象（包含成员变量），和数组。但发生[方法逃逸](https://www.cnblogs.com/rookieLearn/p/7429800.html)了就不会保存堆里面了。
+
+关于内存模型的**图片**： 
+
+![图片：关于常量池的解释](jvm.assets/20180814141313737)	
+
+
+
+
+
+# Java运行时数据区域
+
+众所周知，Java 虚拟机有自动内存管理机制，如果出现内存泄漏和溢出方面的问题，排查错误就必须要了解虚拟机是怎样使用内存的。
+
+下图是 JDK8 之后的 JVM 内存布局。
+
+![图摘自《码出高效》](jvm.assets/14923529-c0cbbccaa6858ca1.png)
+
+JDK8 之前的内存区域图如下:
+
+![img](jvm.assets/14923529-b96312d95eb09d15.png)
+
+> 在 HotSpot JVM 中，永久代中用于存放类和方法的元数据以及常量池，比如`Class`和`Method`。每当一个类初次被加载的时候，它的元数据都会放到永久代中。
+>  永久代是有大小限制的，因此如果加载的类太多，很有可能导致永久代内存溢出，即万恶的 *java.lang.OutOfMemoryError: PermGen* ，为此我们不得不对虚拟机做调优。
+>  那么，Java 8 中 PermGen 为什么被移出 HotSpot JVM 了？我总结了两个主要原因:
+
+1. 由于 PermGen 内存经常会溢出，引发恼人的 *java.lang.OutOfMemoryError: PermGen*，因此 JVM 的开发者希望这一块内存可以更灵活地被管理，不要再经常出现这样的 OOM
+2. 移除 PermGen 可以促进 HotSpot JVM 与 JRockit VM 的融合，因为 JRockit 没有永久代。
+    根据上面的各种原因，PermGen 最终被移除，**方法区移至 Metaspace，字符串常量移至 Java Heap**。
+
+# 架构
+
+![jvm整体架构](jvm.assets/jvm%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84.webp)
+
+
+
 # 概念
 
 1、JVM内存模型：
@@ -64,7 +109,7 @@ java.lang.OutOfMemoryError: Out of swap space
 java.lang.OutOfMemoryError：Kill process or sacrifice child
 ```
 
-x
+
 
 
 
