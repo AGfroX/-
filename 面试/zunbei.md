@@ -1,6 +1,6 @@
-# 什么是redis？redis的优缺点
+# redis
 
-
+## 什么是redis？redis的优缺点
 
 Redis的全称是：Remote Dictionary.Server，本质上是一个Key-Value类型的内存数据库，很像 memcached，整个数据库统统加载在内存当中进行操作，定期通过异步操作把数据库数据flush到硬盘 上进行保存。
 
@@ -15,7 +15,9 @@ Redis的缺点
 
  总结： Redis受限于特定的场景，专注于特定的领域之下，速度相当之快，目前还未找到能替代使用产品。
 
-# 什么是dockers？docker的优缺点
+# dockers
+
+## 什么是dockers？docker的优缺点
 
 Docker是一个开源的应用容器引擎，是一个轻量级容器技术。
 
@@ -46,15 +48,19 @@ Docker是一个开源的应用容器引擎，是一个轻量级容器技术。
 
 2. 性能
 
-
-
-# 什么是Tomcat?tomcat的优缺点
-
+## 常用命令
 
 
 
+# Tomcat
 
-# 什么是ngnix?ngnix的优缺点
+## 什么是Tomcat?tomcat的优缺点
+
+
+
+# ngnix
+
+## 什么是ngnix?ngnix的优缺点
 
 Nginx(engine x) 是一个高性能的HTTP和反向代理服务，也是一个IMAP/POP3/SMTP服务。
 
@@ -80,13 +86,17 @@ Nginx(engine x) 是一个高性能的HTTP和反向代理服务，也是一个IMA
 
 2.rewrite弱：虽然nginx支持rewrite功能，但是相比于Apache来说，Apache比nginx 的rewrite 强大。
 
-# 什么是maven?maven的优缺点
+
+
+# Maven
+
+## 什么是maven?maven的优缺点
 
 
 
 
 
-##  **优点如下：**
+###  **优点如下：**
 
 1. 简化了项目依赖管理：
 2. 易于上手，对于新手可能一个"mvn clean package"命令就可能满足他的工作
@@ -95,7 +105,7 @@ Nginx(engine x) 是一个高性能的HTTP和反向代理服务，也是一个IMA
 5. 有助于多模块项目的开发，一个模块开发好后，发布到仓库，依赖该模块时可以直接从仓库更新，而不用自己去编译。
 6. maven有很多插件，便于功能扩展，比如生产站点，自动发布版本等
 
-##  **缺点如下：**
+###  **缺点如下：**
 
 1. maven是一个庞大的构建系统，学习难度大
 2. maven采用约定优于配置的策略（convention over configuration），虽然上手容易，但是一旦出了问题，难于调试。
@@ -195,9 +205,217 @@ Maven 可以避免去搜索所有所需库的需求。Maven 通过读取项目�
 
 
 
+# JVM
+
+## JMM
+
+JMM即Java内存模型(Java memory model)，在JSR133里指出了JMM是用来定义一个**一致的、跨平台**的内存模型，是缓存一致性协议，用来定义数据读写的规则。
+
+### 内存可见性
+
+在Java中，不同线程拥有各自的私有**工作内存**，当线程需要读取或修改某个变量时，不能直接去操作**主内存**中的变量，而是需要将这个变量读取到线程的**工作内存**的**变量副本**中，当该线程修改其变量副本的值后，**其它线程并不能立刻读取到新值**，需要将修改后的值**刷新到主内存中**，其它线程才能**从主内存读取到修改后的值**。
 
 
-# volatile
+![img](zunbei.assets/d866f75118d947c2b3c4bc4a340c3d38~tplv-k3u1fbpfcp-watermark.image)
+
+### 指令重排序
+
+在执行程序时为了提高性能，编译器和处理器常常会对指令做重排序，指令重排序使得代码在**多线程**执行时会出现一些问题。
+
+其中最著名的案例便是在**初始化单例时**由于**可见性**和**重排序**导致的错误。
+
+单例模式
+
+#### 案例1
+
+```java
+public class Singleton {
+    private static Singleton singleton;
+    private Singleton() {
+    }
+    public static Singleton getInstance() {
+        if (singleton == null) {
+            singleton = new Singleton();
+        }
+        return singleton;
+    }
+}
+复制代码
+```
+
+以上代码是经典的**懒汉式**单例实现，但在多线程的情况下，多个线程有可能会同时进入`if (singleton == null)` ，从而执行了多次`singleton = new Singleton()`，从而破坏单例。
+
+#### 案例2
+
+```java
+public class Singleton {
+    private static Singleton singleton;
+    private Singleton() {
+    }
+    public static Singleton getInstance() {
+        if (singleton == null) {
+            synchronized (Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
+    }
+}
+复制代码
+```
+
+以上代码在检测到`singleton`为null后，会在同步块中再次判断，可以保证同一时间只有一个线程可以初始化单例。但仍然存在问题，原因就是Java中`singleton = new Singleton()`语句并不是一个**原子指令**，而是由三步组成：
+
+1. 为对象分配内存
+2. 初始化对象
+3. 将对象的内存地址赋给引用
+
+但是当经过**指令重排序**后，会变成：
+
+1. 为对象分配内存
+2. 将对象的内存地址赋给引用（会使得singleton != null）
+3. 初始化对象
+
+所以就存在一种情况，当线程A已经将内存地址赋给引用时，但**实例对象并没有完全初始化**，同时线程B判断`singleton`已经不为null，就会导致B线程**访问到未初始化的变量**从而产生错误。
+
+#### 案例3
+
+```java
+public class Singleton {
+    private static volatile Singleton singleton;
+    private Singleton() {
+    }
+    public static Singleton getInstance() {
+        if (singleton == null) {
+            synchronized (Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
+    }
+}
+复制代码
+```
+
+以上代码对`singleton`变量添加了`volatile`修饰，可以阻止**局部指令重排序**。
+
+
+
+
+
+# 多线程与高并发
+
+## volatile
 
 volatile的作用就是当一个线程更新某个volatile声明的变量时，会通知其他的cpu使缓存失效，从而其他cpu想要做更新操作时，需要从内存重新读取数据
 
+### 原理
+
+1. 规定线程每次修改变量副本后**立刻同步到主内存**中，用于保证其它线程可以看到自己对变量的修改
+2. 规定线程每次使用变量前，先从主内存中**刷新最新的值**到工作内存，用于保证能看见其它线程对变量修改的最新值
+3. 为了实现可见性内存语义，编译器在生成字节码时，会在指令序列中插入**内存屏障**来**防止指令重排序**。
+
+### 注意：
+
+1. volatile只能保证基本类型变量的内存可见性，对于引用类型，无法保证引用所指向的**实际对象内部数据**的内存可见性。关于引用变量类型详见：[Java的数据类型](https://mp.weixin.qq.com/s/FqrnDcPt4a5SS8eTRffJdQ)。
+2. volilate只能保证共享对象的**可见性**，不能保证**原子性**：假设两个线程同时在做x++，在线程A修改共享变量从0到1的同时，线程B**已经正在使用**值为0的变量，所以这时候**可见性已经无法发挥作用**，线程B将其修改为1，所以最后结果是1而不是2。
+
+### 为什么volatile可以保证变量的可见性和阻止指令重排序？
+
+
+
+### volatile案例
+
+```java
+public class Singleton {
+    private static volatile Singleton singleton;
+    private Singleton() {
+    }
+    public static Singleton getInstance() {
+        if (singleton == null) {
+            synchronized (Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
+    }
+}
+复制代码
+```
+
+以上代码对`singleton`变量添加了`volatile`修饰，可以阻止**局部指令重排序**。
+
+
+
+# 网络
+
+## 三次握手
+
+​    所谓三次握手（Three-Way Handshake）即建立TCP连接，就是指建立一个TCP连接时，需要客户端和服务端总共发送3个包以确认连接的建立。在socket编程中，这一过程由客户端执行connect来触发，整个流程如下图所示：
+
+  ![img](zunbei.assets/22312037_1365405910EROI.png)
+图2 TCP三次握手
+
+​    （1）第一次握手：Client将标志位SYN置为1，随机产生一个值seq=J，并将该数据包发送给Server，Client进入SYN_SENT状态，等待Server确认。
+​      （2）第二次握手：Server收到数据包后由标志位SYN=1知道Client请求建立连接，Server将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给Client以确认连接请求，Server进入SYN_RCVD状态。
+​      （3）第三次握手：Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了。
+
+## 四次挥手
+
+​     三次握手耳熟能详，四次挥手估计就![img](zunbei.assets/20.gif)，所谓四次挥手（Four-Way Wavehand）即终止TCP连接，就是指断开一个TCP连接时，需要客户端和服务端总共发送4个包以确认连接的断开。在socket编程中，这一过程由客户端或服务端任一方执行close来触发，整个流程如下图所示：
+
+  ![img](zunbei.assets/22312037_1365503104wDR0.png)
+图3 TCP四次挥手
+
+​      由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个FIN来终止这一方向的连接，收到一个FIN只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭，上图描述的即是如此。
+​    （1）第一次挥手：Client发送一个FIN，用来关闭Client到Server的数据传送，Client进入FIN_WAIT_1状态。
+​    （2）第二次挥手：Server收到FIN后，发送一个ACK给Client，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号），Server进入CLOSE_WAIT状态。
+​    （3）第三次挥手：Server发送一个FIN，用来关闭Server到Client的数据传送，Server进入LAST_ACK状态。
+​    （4）第四次挥手：Client收到FIN后，Client进入TIME_WAIT状态，接着发送一个ACK给Server，确认序号为收到序号+1，Server进入CLOSED状态，完成四次挥手。
+
+## 为什么建立连接是三次握手，而关闭连接却是四次挥手呢？
+
+​      这是因为服务端在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。而关闭连接时，当收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，己方也未必全部数据都发送给对方了，所以己方可以立即close，也可以发送一些数据给对方后，再发送FIN报文给对方来表示同意现在关闭连接，因此，己方ACK和FIN一般都会分开发送。
+
+
+
+## 输入url到加载完页面发生了什么
+
+1. DNS解析
+2. TCP连接
+3. 发送HTTP请求
+4. 服务器处理请求并返回HTTP报文
+5. 浏览器解析渲染页面
+6. 连接结束
+
+
+
+#  Restful风格
+
+## 什么是 Restful风格
+
+
+
+
+
+
+
+# Servlet
+
+
+
+
+
+# spring 、spring MVC
+
+
+
+
+
+# spring boot

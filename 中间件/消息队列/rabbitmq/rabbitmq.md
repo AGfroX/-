@@ -6,6 +6,8 @@
 
 # 架构，涉及的设计模式
 
+![image-20210421130259812](rabbitmq.assets/image-20210421130259812.png)
+
 
 
 # 消息分发机制
@@ -55,6 +57,9 @@ RabbitMQ将Queue中的消息发送到消息消费者。
 Exchange：生产者将消息发送到Exchange（交换器），由Exchange将消息路由到一个
 或多个Queue中（或者丢弃）。Exchange并不存储消息。RabbitMQ中的Exchange有
 direct、fanout、topic、headers四种类型，每种类型对应不同的路由规则。
+直连交换机-direct  ：RountingKey = BindingKey
+主题交换机-topic   : 匹配模式，如 ： *.lga.*
+广播交换机-fanout  : 广播模式
 
 Queue：（队列）是RabbitMQ的内部对象，用于存储消息。消息消费者就是通过订阅
 队列来获取消息的，RabbitMQ中的消息都只能存储在Queue中，生产者生产消息并最终
