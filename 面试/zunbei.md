@@ -15,6 +15,30 @@ Redis的缺点
 
  总结： Redis受限于特定的场景，专注于特定的领域之下，速度相当之快，目前还未找到能替代使用产品。
 
+
+
+## 主从复制
+
+
+
+## 集群
+
+### 集群方案
+
+### 集群问题
+
+
+
+
+
+## 提问
+
+
+
+# RabbitＭＱ
+
+## 提问
+
 # dockers
 
 ## 什么是dockers？docker的优缺点
@@ -52,11 +76,15 @@ Docker是一个开源的应用容器引擎，是一个轻量级容器技术。
 
 
 
+## 提问
+
+
+
 # Tomcat
 
 ## 什么是Tomcat?tomcat的优缺点
 
-
+## 提问
 
 # ngnix
 
@@ -87,6 +115,8 @@ Nginx(engine x) 是一个高性能的HTTP和反向代理服务，也是一个IMA
 2.rewrite弱：虽然nginx支持rewrite功能，但是相比于Apache来说，Apache比nginx 的rewrite 强大。
 
 
+
+## 提问
 
 # Maven
 
@@ -205,6 +235,10 @@ Maven 可以避免去搜索所有所需库的需求。Maven 通过读取项目�
 
 
 
+
+
+## 提问
+
 # JVM
 
 ## JMM
@@ -307,6 +341,8 @@ public class Singleton {
 
 
 
+## 提问
+
 # 多线程与高并发
 
 ## volatile
@@ -353,6 +389,10 @@ public class Singleton {
 
 
 
+
+
+## 提问
+
 # 网络
 
 ## 三次握手
@@ -394,7 +434,21 @@ public class Singleton {
 5. 浏览器解析渲染页面
 6. 连接结束
 
+## DNS
 
+
+
+##  TCP/IP  原理
+
+
+
+## HTTP  原理
+
+## CDN  原理
+
+
+
+## 提问
 
 #  Restful风格
 
@@ -404,18 +458,284 @@ public class Singleton {
 
 
 
-
+## 提问
 
 # Servlet
 
+## 生命周期
 
+## 加载过程
+
+## 核心配置文件
+
+## 设计模式
+
+## 实现原理
+
+## 提问
+
+
+
+# Mybatis
+
+
+
+
+
+# hibernate(了解一下)
 
 
 
 # spring 、spring MVC
 
+## 生命周期
+
+## 加载过程
+
+## 核心配置文件
+
+## 设计模式
+
+## 实现原理
 
 
 
+## 架构
+
+
+
+## IOC
+
+## AOP
+
+## DI
+
+
+
+## 提问
+
+
+
+# 存储
+
+## 分布式存储
+
+## 海量存储
+
+
+
+# 缓存
+
+## OSCache
+
+
+　　OSCache是个一个广泛采用的高性能的J2EE缓存框架，OSCache能用于任何Java应用程序的普通的缓存解决方案。
+
+　　OSCache有以下特点：
+　　缓存任何对象，你可以不受限制的缓存部分jsp页面或HTTP请求，任何java对象都可以缓存。
+　　
+　　拥有全面的API--OSCache API给你全面的程序来控制所有的OSCache特性。
+　　
+　　永久缓存--缓存能随意的写入硬盘，因此允许昂贵的创建（expensive-to-create）数据来保持缓存，甚至能让应用重启。
+　　
+　　支持集群--集群缓存数据能被单个的进行参数配置，不需要修改代码。
+　　
+　　缓存记录的过期--你可以有最大限度的控制缓存对象的过期，包括可插入式的刷新策略（如果默认性能不需要时）。
+　　
+　　官方网站 [http://www.opensymphony.com/oscache/](http://wenwen.soso.com/z/UrlAlertPage.e?sp=Shttp://www.opensymphony.com/oscache/)
+　　
+
+## Java Caching System
+
+
+　　JSC(Java Caching System)是一个用分布式的缓存系统，是基于服务器的java应用程序。它是通过提供管理各种动态缓存数据来加速动态web应用。
+　　
+　　JCS和其他缓存系统一样，也是一个用于高速读取，低速写入的应用程序。
+　　
+　　动态内容和报表系统能够获得更好的性能。
+　　
+　　如果一个网站，有重复的网站结构，使用间歇性更新方式的数据库（而不是连续不断的更新数据库），被重复搜索出相同结果的，就能够通过执行缓存方式改进其性能和伸缩性。
+　　
+　　官方网站 [http://jakarta.apache.org/turbine/jcs/](http://wenwen.soso.com/z/UrlAlertPage.e?sp=Shttp://jakarta.apache.org/turbine/jcs/)
+　　
+
+## EHCache
+
+
+　　EHCache 是一个纯java的在进程中的缓存，它具有以下特性：快速，简单，为Hibernate2.1充当可插入的缓存，最小的依赖性，全面的文档和测试。
+　　
+　　官方网站 [http://ehcache.sourceforge.net/](http://wenwen.soso.com/z/UrlAlertPage.e?sp=Shttp://ehcache.sourceforge.net/)
+　　
+
+## JCache
+
+　　
+　　JCache是个开源程序，正在努力成为JSR-107开源规范，JSR-107规范已经很多年没改变了。这个版本仍然是构建在最初的功能定义上。
+　　
+　　官方网站 [http://jcache.sourceforge.net/](http://wenwen.soso.com/z/UrlAlertPage.e?sp=Shttp://jcache.sourceforge.net/)
+　　
+　　ShiftOne
+　　
+　　ShiftOne Java Object Cache是一个执行一系列严格的对象缓存策略的Java lib，就像一个轻量级的配置缓存工作状态的框架。
+　　
+　　官方网站 [http://jocache.sourceforge.net/](http://wenwen.soso.com/z/UrlAlertPage.e?sp=Shttp://jocache.sourceforge.net/)
+　　
+
+## SwarmCache
+
+
+　　SwarmCache是一个简单且有效的分布式缓存，它使用IP multicast与同一个局域网的其他主机进行通讯，是特别为集群和数据驱动web应用程序而设计的。SwarmCache能够让典型的读操作大大超过写操作的这类应用提供更好的性能支持。
+　　
+　　SwarmCache使用JavaGroups来管理从属关系和分布式缓存的通讯。
+　　
+　　官方网站 [http://swarmcache.sourceforge.net](http://wenwen.soso.com/z/UrlAlertPage.e?sp=Shttp://swarmcache.sourceforge.net)
+　　
+
+## TreeCache / JBossCache
+
+
+　 　JBossCache是一个复制的事务处理缓存，它允许你缓存企业级应用数据来更好的改善性能。缓存数据被自动复制，让你轻松进行JBoss服务器之间 的集群工作。JBossCache能够通过JBoss应用服务或其他J2EE容器来运行一个MBean服务，当然，它也能独立运行。
+　　
+　　JBossCache包括两个模块：TreeCache和TreeCacheAOP。
+　　
+　　TreeCache --是一个树形结构复制的事务处理缓存。
+　　
+　　TreeCacheAOP --是一个“面向对象”缓存，它使用AOP来动态管理POJO(Plain Old Java Objects)
+　　
+　　注：AOP是OOP的延续，是Aspect Oriented Programming的缩写，意思是面向方面编程。
+　　
+　　官方网站 [http://www.jboss.org/products/jbosscache](http://wenwen.soso.com/z/UrlAlertPage.e?sp=Shttp://www.jboss.org/products/jbosscache)
+　　
+　　WhirlyCache
+　　
+　　Whirlycache是一个快速的、可配置的、存在于内存中的对象的缓存。它能够通过缓存对象来加快网站或应用程序的速度，否则就必须通过查询数据库或其他代价较高的处理程序来建立。
 
 # spring boot
+
+## 生命周期
+
+## 加载过程
+
+## 核心配置文件
+
+## 设计模式
+
+## 实现原理
+
+## 提问
+
+
+
+# 微服务
+
+## 服务注册
+
+## API网关
+
+## 配置中心
+
+## 事件调度
+
+## 服务跟踪
+
+## 服务熔断
+
+## API管理
+
+## 提问
+
+# RPC
+
+## 提问
+
+# Spring Cloud
+
+## 提问
+
+# DUBBO
+
+## 提问
+
+# Elasticsearch
+
+## 提问
+
+
+
+# Java 基础
+
+## 提问
+
+
+
+# 集合类
+
+## 提问
+
+
+
+
+
+# IO NIO BIO 　ＡＩＯ
+
+## 提问
+
+
+
+# 设计模式
+
+## 设计原则 设计原则
+
+
+
+## 23种设计模式
+
+1. ### 工厂方法模式 工厂方法模式
+
+2. ### 抽象工厂模式 抽象工厂模式
+
+3. ### 单例模式 单例模式
+
+4. ### 建造者模式 建造者模式
+
+5. ### 原型模式 原型模式
+
+6. ### 适配器模式 适配器模式
+
+7. ### 装饰器模式 装饰器模式
+
+8. ### 代理模式 代理模式
+
+9. ### 外观模式
+
+10. ### 桥接模式
+
+11. ### 组合模式
+
+12. ### 享元模式
+
+13. ### 策略模式
+
+14. ### 模板方法模式
+
+15. ### 观察者模式
+
+16. ### 迭代子模式
+
+17. ### 责任链模式
+
+18. ### 命令模式
+
+19. ### 备忘录模式
+
+20. ### 状态模式
+
+21. ### 访问者模式
+
+22. ### 中介者模式
+
+23. ### 解释器模式
+
+
+
+## 提问
