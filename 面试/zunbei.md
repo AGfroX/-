@@ -449,6 +449,24 @@ Nginx(engine x) 是一个高性能的HTTP和反向代理服务，也是一个IMA
 
 
 
+
+
+## 功能实现
+
+### 怎么配置负载均衡
+
+
+
+### 怎么配置方向代理
+
+
+
+### 怎么配置动静分离
+
+
+
+
+
 ## 提问
 
 # Maven
@@ -741,6 +759,8 @@ Java自带的加载器加载的类,在虚拟机的生命周期中是不会被卸
 可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用
 链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的，不可达对象。
 
+### 什么对象不可回收？
+
 ## 垃圾收集算法
 
 GC最基础的算法有三种： 标记 -清除算法、复制算法、标记-压缩算法，我们常用的垃圾回收器一般都
@@ -791,6 +811,20 @@ Java对象由三个部分组成：对象头、实例数据、对齐填充。
 设定垃圾回收器 年轻代用 -XX:+UseParNewGC 年老代用-XX:+UseConcMarkSweepGC
 
 ## 提问
+
+
+
+## IO
+
+## io模型
+
+
+
+
+
+## 序列化
+
+
 
 # 多线程与高并发
 
@@ -907,7 +941,13 @@ Semaphore 就是一个信号量，它的作用是限制某段代码块的并发�
 
 Synchronized 关键字，Lock 锁实现，分布式锁等。
 
+## 线程池
+
+
+
 ## 提问
+
+### 设计一个线程池
 
 # 网络
 
@@ -994,13 +1034,9 @@ Synchronized 关键字，Lock 锁实现，分布式锁等。
 
 # Mybatis
 
-## Mybatis 的编程步骤是什么样的？（2017-12-2-wzz）
 
-1、创建 SqlSessionFactory
-2、通过 SqlSessionFactory 创建 SqlSession
-3、通过 sqlsession 执行数据库操作
-4、调用 session.commit()提交事务
-5、调用 session.close()关闭会话
+
+## mybatis 是什么
 
 
 
@@ -1015,6 +1051,18 @@ updae
 delete
 
 trim  |where  set  foreach  if  choose  when  otherwise   bind  sql
+
+
+
+## Mybatis 工作流程
+
+1、创建 SqlSessionFactory
+2、通过 SqlSessionFactory 创建 SqlSession
+3、通过 sqlsession 执行数据库操作
+4、调用 session.commit()提交事务
+5、调用 session.close()关闭会话
+
+## mybatis如何绑定一个要执行的方法？
 
 # 什么是 MyBatis 的接口绑定？有哪些实现方式？
 
